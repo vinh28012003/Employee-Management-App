@@ -15,7 +15,6 @@ User then can edit the data, delete the data according to their needs.
 - React.js
 - Next.js
 ## Authors
-Daily Code Buffer
 [Daily Code Buffer](http://www.dailycodebuffer.com)
 ## Acknowledgments
 
