@@ -13,7 +13,6 @@ User then can edit the data, delete the data according to their needs.
 - Apache Maven 3.8.6 
 - MySQL workbench
 - React.js
-- Next.js
 ## Authors
 [Daily Code Buffer](http://www.dailycodebuffer.com)
 ## Acknowledgments
