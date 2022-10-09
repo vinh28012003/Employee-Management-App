@@ -13,9 +13,7 @@ User then can edit the data, delete the data according to their needs.
 - Apache Maven 3.8.6 
 - MySQL workbench
 - React.js
-## Authors
-[Daily Code Buffer](http://www.dailycodebuffer.com)
-## Acknowledgments
 
+## Acknowledgments
 Built the same project at:
 * [Daily Code Buffer](https://www.youtube.com/watch?v=EHDlebVv6zw)
