@@ -1,6 +1,7 @@
 import React from 'react'
 
 const NavBar = () => {
+  //Dark Blue navigation bar is created
   return (
     <div className="bg-gray-900">
       <div className="h-16 px-8 flex items-center">

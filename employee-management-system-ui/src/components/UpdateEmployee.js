@@ -1,48 +1,53 @@
-import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { useLocation, useNavigate} from "react-router-dom";
 import EmployeeService from '../services/EmployeeService';
-
-const AddEmployee = () => {
-    //Method use to navigate to the List
+const UpdateEmployee = () => {
     const navigate = useNavigate();
-    //Add employee const use to create a blue print for employee's data
+    const loct= useLocation();
     const [employee, setEmployee] = useState({
-        id: "",
+        id: loct.state.id,
         firstName: "",
         lastName: "",
         emailId: "",
     });
-    //handle change use to assemble input data in to the blueprint
     const handleChange = (e) => {
         const value = e.target.value;
         setEmployee({...employee, [e.target.name]: value});
     };
-    //saveEmployee called to ask the service to send the data to backend
-    const saveEmployee = (e) =>{
+    const updateEmployee = (e) => {
         e.preventDefault();
-        EmployeeService.saveEmployee(employee).then((response) => {
-            console.log(response);
-            navigate("/employeeList");
-        }).catch((error) => {
+        EmployeeService.updateEmployee(employee, loct.state.id).then((response)=>{
+            navigate("/employeeList")
+        }).catch((error) =>{
             console.log(error);
         });
-    }
-    //Reset textbox
-    const reset = (e) => {
-        e.preventDefault();
-        setEmployee({
-            id: "",
-            firstName: "",
-            lastName: "",
-            emailId: "",
-        });
     };
+    const cancelChange = (e) =>{
+        e.preventDefault();
+        try {
+            navigate("/employeeList");
+        } catch (error){
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        const fetchData =  async () => {
+            try{
+                const response =  await EmployeeService.getEmployeeById(loct.state.id);
+                setEmployee(response.data);
+            }catch(error){
+                console.log(error);
+            }
+        };
+        fetchData();
+    },[loct.state.id]);
+    
   return (
     <div className="flex max-w-2xl shadow mx-auto border-b">
         <div className="px-8 py-8">
             <div className="font-thin text-3xl tracking-wider">
                 <h1>
-                    Add New Employee
+                    Update Employee
                 </h1>
             </div>
             <div className="item-center justify-center h-14 w-full my-2">
@@ -59,7 +64,7 @@ const AddEmployee = () => {
             <div className="item-center justify-center h-14 w-full my-2">
                 <label className="block text-gray-700 text-sm font-normal">
                     Last Name
-                    </label>
+                </label>
                 <input 
                 type="text"
                 name="lastName"
@@ -80,20 +85,20 @@ const AddEmployee = () => {
             </div>
             <div className="item-center justify-center h-9 w-full my-4 space-x-4 pt-4">
                 <button 
-                onClick={saveEmployee}
+                onClick={updateEmployee}
                 className="rounded text-white font-semibold bg-green-500 hover:bg-green-600 py-2 px-6">
-                    Save
+                    Update
                 </button>
                 <button 
+                onClick={cancelChange}
                 className="rounded text-white font-semibold bg-red-500 hover:bg-red-600 py-2 px-6 "
-                onClick={reset}>
-                    Clear
+                >
+                    Cancel
                 </button>
             </div>
-            
         </div>     
     </div>
   )
-}
+};
 
-export default AddEmployee
+export default UpdateEmployee
